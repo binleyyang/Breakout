@@ -15,7 +15,7 @@ public class PlayGame {
 		
 		Rebound mainPanel = new Rebound();
 		
-		JFrame frame = new JFrame("Scaffolding");
+		JFrame frame = new JFrame("Prison Break");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.getContentPane().add(mainPanel);
 	    frame.pack();

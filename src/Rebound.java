@@ -1,15 +1,21 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import acm.graphics.*;
+import acm.util.*;
 
 @SuppressWarnings("serial")
 public class Rebound extends JPanel { 
 	
+	private GRect brick;
+	private GOval ball;
 	ImageIcon rectangle;
 	static JLabel paddle;
+	static JLabel ball1;
+	private double vx, vy;
+	private RandomGenerator rgen = RandomGenerator.getInstance();
 	
-	public Rebound() {
-		
+	public void init() {
 		setLayout(new BorderLayout());
 		ActionMap actionMap = getActionMap();
 		int check = JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -26,7 +32,40 @@ public class Rebound extends JPanel {
 		rectangle.setImage(i2);
 		paddle = new JLabel(rectangle);
 		
+		//drawing the ball
+		double x = getWidth()/2 - 10;
+		double y = getHeight()/2 - 10;
+		ball = new GOval(x, y, 10, 10);
+		ball.setFilled(true);
+		add(ball);
+		
 		add(paddle, BorderLayout.SOUTH);
+	}
+	
+	public Rebound() {
+		
+		init();
+		moveBall();
+		
+		//set velocity for the ball's x and y
+		vx = 1;
+		vy = 2;
+	}
+	
+	private void moveBall() {
+		double x = ball1.getX();
+		double y = ball1.getY();
+		
+		if (x == 0 || x == getWidth() - 10)
+			vx = -vx;
+		if (y == 0 || y == getHeight() -10)
+			vy = -vy;
+		
+		ball.move(vx, vy);
+	}
+	
+	private void addBricks() {
+		
 	}
 	
 	private class Movement extends AbstractAction {
