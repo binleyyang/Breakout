@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.Random;
 
 @SuppressWarnings("serial")
 public class Rebound extends JPanel { 
@@ -42,17 +43,20 @@ public class Rebound extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Ball ball = new Ball(frame);
+			ball.addBricks();
 			
+			int count = 0;
 			int x = paddle.getX();
 			String move = e.getActionCommand();
 			
-			if (move.equals("Left"))
-				paddle.setLocation(x-20, 741);
-			if (move.equals("Right"))
-				paddle.setLocation(x+20, 741);
-			if (move.equals("Space")) {
-				Ball ball = new Ball(frame);
+			if (move.equals("Left") && x >= 7)
+				paddle.setLocation(x-30, 741);
+			if (move.equals("Right") && x <= frame.getSize().width-90)
+				paddle.setLocation(x+30, 741);
+			if (move.equals("Space") && count < 1) {
 				ball.start();
+				count = 1;
 			}
 		}
 	}
@@ -60,19 +64,52 @@ public class Rebound extends JPanel {
 
 class Ball extends Thread {
 
-	private int vx = 2, vy = 2, x = 400, y = 400;
+	int a = Rebound.paddle.getX()+50;
+	int b = Rebound.paddle.getY()-9;
+	private int vx = 2, vy = 2, x = a, y = b;
 	private JPanel box;
 	
 	public Ball (JPanel m) {
 		box = m;
 	}
 	
+	/*
+	public static Color randColor() {
+		Random r = new Random();
+		int a = r.nextInt(256);
+		int b = r.nextInt(256);
+		int c = r.nextInt(256);
+		Color x = new Color(a, b, c);
+		
+		return x;
+	}
+	*/
+	
 	public void addBall() {
 		Graphics g = box.getGraphics();
-		int a = Rebound.paddle.getX();
-		int b = Rebound.paddle.getY();
 		g.fillOval(x, y, 10, 10);
 		g.dispose();
+	}
+	
+	public void addBricks() {
+		Graphics g = box.getGraphics();
+		
+		for (int column = 0; column <= 90; column += 10) {
+			for (int row = 0; row <= 930; row += 155) {
+				g.fillRect(row, column, 155, 10);
+			
+				if (column == 0 || column == 10) 
+					g.setColor(Color.RED);
+				if (column == 20 || column == 30)
+					g.setColor(Color.ORANGE);
+				if (column == 40 || column == 50)
+					g.setColor(Color.YELLOW);
+				if (column == 60 || column == 70)
+					g.setColor(Color.GREEN);
+				if (column == 80 || column == 90)
+					g.setColor(Color.CYAN);
+			}
+		}
 	}
 	
 	public void moveBall() {
@@ -93,26 +130,33 @@ class Ball extends Thread {
 	    	vx = -vx;
 	    }
 		    
-	    if (y < 0) {
-	    	y = 0;
+	    if (y <= 90) {
+	    	y = 90;
 	    	vy = -vy;
+	    	if (x <= 155) {
+	    		g.setColor(Color.white);
+	    		g.fillRect(0, 60, 155, 10);
+	    	}
 	    }
 		    
-	    if (y+10 >= d.height) {
-	    	y = d.height - 10;
+	    if (y >= box.getSize().height-25 && x >= Rebound.paddle.getX() && x < Rebound.paddle.getX()+100) {
 	    	vy = -vy;
 		}
 		    
 	    g.fillOval(x, y, 10, 10);
-	    g.dispose();
+	    //g.dispose();
 	}
 
 	public void run() {
 		try {
 			addBall();
 			for (int i = 1; i > 0; i++) {
-				  moveBall();
-				  sleep(5);
+				if (y+10 >= box.getSize().height) {
+					System.out.println("Game Over!");
+					break;
+				}
+				moveBall();
+				sleep(4);
 			}	
 		} 
 		catch (InterruptedException e) {}
