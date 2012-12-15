@@ -47,9 +47,9 @@ public class Rebound extends JPanel {
 			String move = e.getActionCommand();
 			
 			if (move.equals("Left"))
-				paddle.setLocation(x-10, 741);
+				paddle.setLocation(x-20, 741);
 			if (move.equals("Right"))
-				paddle.setLocation(x+10, 741);
+				paddle.setLocation(x+20, 741);
 			if (move.equals("Space")) {
 				Ball ball = new Ball(frame);
 				ball.start();
@@ -57,95 +57,95 @@ public class Rebound extends JPanel {
 		}
 	}
 }
+
+class Ball extends Thread {
+
+	private int vx = 2, vy = 2, x = 400, y = 400;
+	private JPanel box;
 	
-	enum paddleDirection {
-			
-		LEFT("Left", KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0)),
-		RIGHT("Right", KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)),
-		SPACE("Space", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
-
-		paddleDirection(String text, KeyStroke keyStroke) {
-		    this.name = name;
-		    this.keyStroke = keyStroke;
-		}
-		   
-		private String name;
-		private KeyStroke keyStroke;
-
-		public String getText() {
-			return name;
-		}
-
-		public KeyStroke getKeyStroke() {
-		   return keyStroke;
-		}
-
-		@Override
-		public String toString() {
-			return name;
+	public Ball (JPanel m) {
+		box = m;
+	}
+	
+	public void addBall() {
+		Graphics g = box.getGraphics();
+		int a = Rebound.paddle.getX();
+		int b = Rebound.paddle.getY();
+		g.fillOval(x, y, 10, 10);
+		g.dispose();
+	}
+	
+	public void moveBall() {
+		Graphics g = box.getGraphics();
+		g.setXORMode(box.getBackground());
+	    g.fillOval(x, y, 10, 10);
+	    x -= vx;
+	    y -= vy;
+	    Dimension d = box.getSize();
+		    
+	    if (x < 0) {
+	    	x = 0;
+	    	vx = -vx;
 	    }
+		    
+	    if (x+10 >= d.width) {
+	    	x = d.width - 10;
+	    	vx = -vx;
+	    }
+		    
+	    if (y < 0) {
+	    	y = 0;
+	    	vy = -vy;
+	    }
+		    
+	    if (y+10 >= d.height) {
+	    	y = d.height - 10;
+	    	vy = -vy;
+		}
+		    
+	    g.fillOval(x, y, 10, 10);
+	    g.dispose();
+	}
+
+	public void run() {
+		try {
+			addBall();
+			for (int i = 1; i > 0; i++) {
+				  moveBall();
+				  sleep(5);
+			}	
+		} 
+		catch (InterruptedException e) {}
+	}
+}
+
+enum paddleDirection {
+		
+	LEFT("Left", KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0)),
+	RIGHT("Right", KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0)),
+	SPACE("Space", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
+ 
+	private String name;
+	private KeyStroke keyStroke;
+
+	paddleDirection (String name, KeyStroke keyStroke) {
+	    this.name = name;
+	    this.keyStroke = keyStroke;
 	}
 	
-	class Ball extends Thread {
-
-		private int vx = 2, vy = 2, x = 400, y = 400;
-		private JPanel box;
-		
-		public Ball (JPanel m) {
-			box = m;
-		}
-		
-		public void addBall() {
-			Graphics g = box.getGraphics();
-			int a = Rebound.paddle.getX();
-			int b = Rebound.paddle.getY();
-			g.fillOval(a, b, 10, 10);
-			g.dispose();
-		}
-		
-		public void moveBall() {
-			Graphics g = box.getGraphics();
-			g.setXORMode(box.getBackground());
-		    g.fillOval(x, y, 10, 10);
-		    x -= vx;
-		    y -= vy;
-		    Dimension d = box.getSize();
-			    
-		    if (x < 0) {
-		    	x = 0;
-		    	vx = -vx;
-		    }
-			    
-		    if (x + 10 >= d.width) {
-		    	x = d.width - 10;
-		    	vx = -vx;
-		    }
-			    
-		    if (y < 0) {
-		    	y = 0;
-		    	vy = -vy;
-		    }
-			    
-		    if (y + 10 >= d.height) {
-		    	y = d.height - 10;
-		    	vy = -vy;
-			}
-			    
-		    g.fillOval(x, y, 10, 10);
-		    g.dispose();
-		}
-
-		public void run() {
-			try {
-				addBall();
-				for (int i = 1; i > 0; i++) {
-					  moveBall();
-					  sleep(5);
-				}	
-			} 
-			catch (InterruptedException e) {
-				//nothing
-			}
-		}
+	public String getText() {
+		return name;
 	}
+
+	public KeyStroke getKeyStroke() {
+	   return keyStroke;
+	}
+
+	@Override
+	public String toString() {
+		return name;
+    }
+}	
+	
+	
 
