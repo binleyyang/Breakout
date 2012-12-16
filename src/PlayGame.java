@@ -23,4 +23,6 @@ public class PlayGame {
 	    frame.setVisible(true);
      	frame.setSize(930,800);
 	}
+	
+
 }
