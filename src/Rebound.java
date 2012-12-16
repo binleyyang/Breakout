@@ -87,6 +87,8 @@ class Ball extends Thread {
 	static int d1 = 70, d2= 70, d3 = 70, d4 = 70, d5 = 70, d6 = 70;
 	static int e1, e2, e3, e4, e5, e6, save;
 	static boolean restart;
+	static Toolkit image = Toolkit.getDefaultToolkit();
+	static Image squirrel = image.createImage("squirrel.jpg");
 	
 	public Ball (JPanel m) {
 		box = m;
@@ -111,7 +113,8 @@ class Ball extends Thread {
 	
 	public void addBall() {
 		Graphics g = box.getGraphics();
-		g.fillOval(x, y, 10, 10);
+		//g.fillOval(x, y, 10, 10);
+		g.drawImage(squirrel, x, y, 20, 20, null);
 		g.dispose();
 	}
 	
@@ -129,7 +132,8 @@ class Ball extends Thread {
 	public void moveBall() {
 		Graphics g = box.getGraphics();
 		g.setXORMode(box.getBackground());
-	    g.fillOval(x, y, 10, 10);
+		//g.fillOval(x, y, 10, 10);
+		g.drawImage(squirrel, x, y, 20, 20, null); //for interesting and cool graphics, comment this line out
 	    x -= vx;
 	    y -= vy;
 	    Dimension d = box.getSize();
@@ -227,7 +231,9 @@ class Ball extends Thread {
 	    if (y >= box.getSize().height-25 && x >= Rebound.paddle.getX() && x < Rebound.paddle.getX()+100)
 	    	vy = -vy;
 		    
-	    g.fillOval(x, y, 10, 10);
+	    //g.fillOval(x, y, 10, 10);
+	    g.drawImage(squirrel, x, y, 20, 20, null);
+	    g.dispose();
 	}
 
 	public void run() {
