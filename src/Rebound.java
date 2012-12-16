@@ -1,8 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Random;
 
@@ -62,8 +60,9 @@ public class Rebound extends JPanel {
 				paddle.setLocation(x+25, 758);
 			if (move.equals("Space")) {
 				if (count < 1) {
-				ball.addBricks();
-				ball.start();
+					Ball.reset();
+					ball.addBricks();
+					ball.start();
 				}
 				if (Ball.lives != 0 && Ball.restart == true) {
 					ball.start();
@@ -93,6 +92,13 @@ class Ball extends Thread {
 		box = m;
 	}
 	
+	public static void reset() {
+		scoreCount = 0;
+		lives = 3;
+		d1 = 70; d2= 70; d3 = 70; d4 = 70; d5 = 70; d6 = 70;
+		restart = false;
+	}
+
 	public Color randColor() {
 		Random r = new Random();
 		int a = r.nextInt(256);
@@ -141,66 +147,78 @@ class Ball extends Thread {
 	   
 	    if (x <= 155) {
 	    	if (y <= d1) {
+	    		if (d1 != 0) {
+		   		    scoreCount++;
+	    		}
 	    	    y = d1;
 	   		    vy = -vy;
 	   		    g.clearRect(0, d1-10, 155, 10);
 	   		    d1 -= 10;
-	   		    scoreCount++;
 	   		    //Rebound.score.setText("Score: " + scoreCount);
 	   		    //System.out.println("The score is: " + scoreCount);
 	    	}
     	}
 	    if (x > 155 && x <= 310) {
 	   		 if (y <= d2) {
+	   			if (d2 != 0) {
+		   		    scoreCount++;
+	    		}
 	   			 y = d2;
 	   			 vy = -vy;
 	   			 g.clearRect(155, d2-10, 155, 10);
 	   			 d2 -= 10;
-	   			 scoreCount++;
 	    		 //Rebound.score.setText("Score: " + scoreCount);
 		   		 //   System.out.println("The score is: " + scoreCount);
 	    		 }
 	    	}
 	    if (x > 310 && x <= 465) {
 	   		 if (y <= d3) {
+	   			if (d3 != 0) {
+		   		    scoreCount++;
+	    		}
 	   			 y = d3;
 	    		 vy = -vy;
 	   			 g.clearRect(310, d3-10, 155, 10);
 	    		 d3 -= 10;
-	   			 scoreCount++;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
 		   		   // System.out.println("The score is: " + scoreCount);
 	    	 }
 	    }
 	    if (x > 465 && x <= 620) {
 	   		 if (y <= d4) {
+	   			if (d1 != 0) {
+		   		    scoreCount++;
+	    		}
 	    		 y = d4;
 	    		 vy = -vy;
 	   			 g.clearRect(465, d4-10, 155, 10);
 	   			 d4 -= 10;
-	   			 scoreCount++;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
 		   		  //  System.out.println("The score is: " + scoreCount);
     		 }
 	   	}
 	   	if (x > 620 && x <= 775) {
 	    	 if (y <= d5) {
+	    		 if (d1 != 0) {
+			   		    scoreCount++;
+		    		}
 	   			 y = d5;
 	   			 vy = -vy;
 	   			 g.clearRect(620, d5-10, 155, 10);
 	   			 d5 -= 10;
-	   			 scoreCount++;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
 		   		    //System.out.println("The score is: " + scoreCount);
 	   		 }
 	   	}
 	    if (x > 775 && x <= 930) {
 	   		 if (y <= d6) {
+	   			if (d1 != 0) {
+		   		    scoreCount++;
+	    		}
 	   			 y = d6;
 	   			 vy = -vy;
 	    		 g.clearRect(775, d6-10, 155, 10);
 	    		 d6 -= 10;
-	   			 scoreCount++;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
 		   		    //System.out.println("The score is: " + scoreCount);
 	   		 }
@@ -217,7 +235,7 @@ class Ball extends Thread {
 			addBall();
 			for (int i = 1; i > 0; i++) {
 				if (y+10 >= box.getSize().height) {
-					System.out.println("You Missed!!!");
+					//System.out.println("You Missed!!!");
 					e1 = d1; e2 = d2; e3 = d3; e4 = d4; e5 = d5; e6 = d6;
 					save = scoreCount;
 					lives--;
