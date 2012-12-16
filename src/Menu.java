@@ -1,47 +1,86 @@
 import java.awt.*;
-
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
+
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
+
 import java.io.*;
 import java.awt.event.*;
 
-public class Menu extends JPanel {
-	
-	static JFrame frame;
-	static JButton game, highscore;
+@SuppressWarnings("serial")
+public class Menu extends JPanel{
+
+	static JButton restart, highscore, music;
 	private Image picture;
+	static JFrame frame;
+
+	public static void main (String[] args) throws IOException{
+		Window();
+	}
 	
-	public static void main (String[] args) {
-		
-		frame = new JFrame ("Breakout");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.getContentPane().add(new Menu());
+	static void Window() throws IOException {
+		frame = new JFrame ("Prison Break");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		frame.getContentPane().add(new Menu("background.jpg"));
 		frame.pack();
 		frame.setVisible(true);
 		frame.setSize(930, 800);
 	}
-	
-	public Menu (String name) throws IOException {
-		
+
+	public Menu(String name) throws IOException{
 		setLayout(new FlowLayout());
-		picture = ImageIO.read(new File(name));
-		highscore = new JButton("High Scores");
-		game = new JButton("New Game");
-		add(game);
-		add(highscore);
-		
-		game.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				frame.setVisible(false);
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						PlayGame.Game();
-					}
-				});
-			}
-		});
+	    picture = ImageIO.read(new File(name));
+	    restart = new JButton("New Game");
+	    highscore = new JButton("High Scores"); 
+	    music = new JButton("Play Song");
+	    add(restart);
+	    add(highscore);
+	    add(music);
+	    
+	    music.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		try {
+					Music();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	    	}
+	    });
+
+	    restart.addActionListener(new ActionListener() {	 
+            public void actionPerformed(ActionEvent e)
+            {
+            	frame.setVisible(false);
+            	SwingUtilities.invokeLater(new Runnable() {
+       	         public void run() {
+       	        	 PlayGame.Game();
+       	        	 Rebound.paddle.setLocation(400, 741);
+       	         }
+       	      });
+            }
+        });      
 	}
-	
+
+	public void Music() throws Exception {
+		try {
+			AudioInputStream music = AudioSystem.getAudioInputStream(new File("levels.wav"));
+			
+			Clip clip = AudioSystem.getClip();
+			clip.open(music);
+			clip.start();
+		} catch (IOException error) {
+			System.out.println("File Not Found!");
+		}
+	}
+
 	public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    g.drawImage(picture, 0, 0, null);

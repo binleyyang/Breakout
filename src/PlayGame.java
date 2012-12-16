@@ -23,6 +23,11 @@ public class PlayGame {
 	    frame.setVisible(true);
      	frame.setSize(930,800);
 	}
+
+	public static void close() {
+		JFrame frame = new JFrame("Prison Break");
+		frame.setVisible(false);
+	}
 	
 
 }

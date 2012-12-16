@@ -2,11 +2,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Random;
@@ -61,11 +56,6 @@ public class Rebound extends JPanel {
 			int x = paddle.getX();
 			String move = e.getActionCommand();
 			
-			//score.setLocation(200, 758);
-			//lives.setLocation(600, 758);
-			
-			Music();
-			
 			if (move.equals("Left") && x >= 7)
 				paddle.setLocation(x-25, 758);
 			if (move.equals("Right") && x <= frame.getSize().width-90)
@@ -75,30 +65,15 @@ public class Rebound extends JPanel {
 				ball.addBricks();
 				ball.start();
 				}
-			if (Ball.lives != 0 && Ball.restart == true) {
-				ball.start();
-				Ball.d1 = Ball.e1; Ball.d2 = Ball.e2; Ball.d3 = Ball.e3; Ball.d4 = Ball.e4; Ball.d5 = Ball.e5; Ball.d6 = Ball.e6;
-				Ball.scoreCount = Ball.save;
-				Ball.restart = false;
-			}
-			count++;
+				if (Ball.lives != 0 && Ball.restart == true) {
+					ball.start();
+					Ball.d1 = Ball.e1; Ball.d2 = Ball.e2; Ball.d3 = Ball.e3; Ball.d4 = Ball.e4; Ball.d5 = Ball.e5; Ball.d6 = Ball.e6;
+					Ball.scoreCount = Ball.save;
+					Ball.restart = false;
+				}
+				count++;
+			}	
 		}
-	}
-}
-	@SuppressWarnings("resource")
-	public void Music() {
-		AudioPlayer music = AudioPlayer.player;
-		ContinuousAudioDataStream loop = null;
-		
-		try {
-			AudioStream playMusic = new AudioStream(new FileInputStream("levels.wav"));
-			AudioData data = playMusic.getData();
-			loop = new ContinuousAudioDataStream(data);
-		} catch (IOException error) {
-			System.out.println("File Not Found!");
-		}
-		
-		music.start(loop);
 	}
 }
 
@@ -172,6 +147,7 @@ class Ball extends Thread {
 	   		    d1 -= 10;
 	   		    scoreCount++;
 	   		    //Rebound.score.setText("Score: " + scoreCount);
+	   		    //System.out.println("The score is: " + scoreCount);
 	    	}
     	}
 	    if (x > 155 && x <= 310) {
@@ -182,6 +158,7 @@ class Ball extends Thread {
 	   			 d2 -= 10;
 	   			 scoreCount++;
 	    		 //Rebound.score.setText("Score: " + scoreCount);
+		   		 //   System.out.println("The score is: " + scoreCount);
 	    		 }
 	    	}
 	    if (x > 310 && x <= 465) {
@@ -192,6 +169,7 @@ class Ball extends Thread {
 	    		 d3 -= 10;
 	   			 scoreCount++;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
+		   		   // System.out.println("The score is: " + scoreCount);
 	    	 }
 	    }
 	    if (x > 465 && x <= 620) {
@@ -202,6 +180,7 @@ class Ball extends Thread {
 	   			 d4 -= 10;
 	   			 scoreCount++;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
+		   		  //  System.out.println("The score is: " + scoreCount);
     		 }
 	   	}
 	   	if (x > 620 && x <= 775) {
@@ -212,6 +191,7 @@ class Ball extends Thread {
 	   			 d5 -= 10;
 	   			 scoreCount++;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
+		   		    //System.out.println("The score is: " + scoreCount);
 	   		 }
 	   	}
 	    if (x > 775 && x <= 930) {
@@ -222,6 +202,7 @@ class Ball extends Thread {
 	    		 d6 -= 10;
 	   			 scoreCount++;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
+		   		    //System.out.println("The score is: " + scoreCount);
 	   		 }
 	   	}
 		    
@@ -230,7 +211,6 @@ class Ball extends Thread {
 		}
 		    
 	    g.fillOval(x, y, 10, 10);
-	    //g.dispose();
 	}
 
 	public void run() {
@@ -243,6 +223,15 @@ class Ball extends Thread {
 					save = scoreCount;
 					lives--;
 					restart = true;
+					if (lives == 0 || scoreCount == 42) {
+						try {
+							PlayGame.close();
+							GameOver.Window();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 					break;
 				}
 				moveBall();
