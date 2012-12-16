@@ -32,11 +32,11 @@ public class Rebound extends JPanel {
 		paddle = new JLabel(rectangle);
 		
 		frame = new JPanel();
+		frame.setLayout(new FlowLayout());
 		add(frame);
 		frame.add(paddle);
 		//frame.add(score, BorderLayout.NORTH+50);
 		//frame.add(lives, BorderLayout.NORTH);
-		paddle.setLocation(400, 741);
 	}
 	
 	private class Movement extends AbstractAction {
@@ -54,9 +54,9 @@ public class Rebound extends JPanel {
 			String move = e.getActionCommand();
 			
 			if (move.equals("Left") && x >= 7)
-				paddle.setLocation(x-25, 741);
+				paddle.setLocation(x-25, 758);
 			if (move.equals("Right") && x <= frame.getSize().width-90)
-				paddle.setLocation(x+25, 741);
+				paddle.setLocation(x+25, 758);
 			if (move.equals("Space") && count < 1) {
 				ball.start();
 				count = 1;
@@ -168,7 +168,7 @@ class Ball extends Thread {
 	    		 if (y <= d5) {
 	    			 y = d5;
 	    			 vy = -vy;
-	    			 g.clearRect(775, d5-10, 155, 10);
+	    			 g.clearRect(620, d5-10, 155, 10);
 	    			 d5 -= 10;
 	    			 scoreCount++;
 	    			 //score.setText("" + scoreCount);

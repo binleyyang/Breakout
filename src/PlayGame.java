@@ -11,7 +11,7 @@ public class PlayGame {
 		});
 	}
 	
-	private static void Game() {
+	public static void Game() {
 		
 		Rebound mainPanel = new Rebound();
 		
