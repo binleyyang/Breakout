@@ -17,7 +17,6 @@ public class Rebound extends JPanel {
 	public Rebound() {
 		
 		setLayout(new BorderLayout());
-		setBackground(Color.white);
 		ActionMap actionMap = getActionMap();
 		int check = JComponent.WHEN_IN_FOCUSED_WINDOW;
 		InputMap inputMap = getInputMap(check);
@@ -54,10 +53,16 @@ public class Rebound extends JPanel {
 			int x = paddle.getX();
 			String move = e.getActionCommand();
 			
-			if (move.equals("Left") && x >= 7)
+			if (move.equals("Left") && x >= 7) {
 				paddle.setLocation(x-25, 758);
-			if (move.equals("Right") && x <= frame.getSize().width-90)
+				score.setLocation(200, 758);
+				lives.setLocation(600, 758);
+			}
+			if (move.equals("Right") && x <= frame.getSize().width-90) {
 				paddle.setLocation(x+25, 758);
+				score.setLocation(200, 758);
+				lives.setLocation(600, 758);
+			}
 			if (move.equals("Space")) {
 				if (count < 1) {
 					Ball.reset();
@@ -159,7 +164,7 @@ class Ball extends Thread {
 	   		    g.clearRect(0, d1-10, 155, 10);
 	   		    d1 -= 10;
 	   		    //Rebound.score.setText("Score: " + scoreCount);
-	   		    //System.out.println("The score is: " + scoreCount);
+	   		    System.out.println("The score is: " + scoreCount);
 	    	}
     	}
 	    if (x > 155 && x <= 310) {
@@ -172,7 +177,7 @@ class Ball extends Thread {
 	   			 g.clearRect(155, d2-10, 155, 10);
 	   			 d2 -= 10;
 	    		 //Rebound.score.setText("Score: " + scoreCount);
-		   		 //   System.out.println("The score is: " + scoreCount);
+		   		    System.out.println("The score is: " + scoreCount);
 	    		 }
 	    	}
 	    if (x > 310 && x <= 465) {
@@ -185,7 +190,7 @@ class Ball extends Thread {
 	   			 g.clearRect(310, d3-10, 155, 10);
 	    		 d3 -= 10;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
-		   		   // System.out.println("The score is: " + scoreCount);
+		   		  System.out.println("The score is: " + scoreCount);
 	    	 }
 	    }
 	    if (x > 465 && x <= 620) {
@@ -198,7 +203,7 @@ class Ball extends Thread {
 	   			 g.clearRect(465, d4-10, 155, 10);
 	   			 d4 -= 10;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
-		   		  //  System.out.println("The score is: " + scoreCount);
+		   		   System.out.println("The score is: " + scoreCount);
     		 }
 	   	}
 	   	if (x > 620 && x <= 775) {
@@ -211,7 +216,7 @@ class Ball extends Thread {
 	   			 g.clearRect(620, d5-10, 155, 10);
 	   			 d5 -= 10;
 	   			 //Rebound.score.setText("Score: " + scoreCount);
-		   		    //System.out.println("The score is: " + scoreCount);
+		   		  System.out.println("The score is: " + scoreCount);
 	   		 }
 	   	}
 	    if (x > 775 && x <= 930) {
@@ -223,8 +228,9 @@ class Ball extends Thread {
 	   			 vy = -vy;
 	    		 g.clearRect(775, d6-10, 155, 10);
 	    		 d6 -= 10;
+	    		 
 	   			 //Rebound.score.setText("Score: " + scoreCount);
-		   		    //System.out.println("The score is: " + scoreCount);
+		   		  System.out.println("The score is: " + scoreCount);
 	   		 }
 	   	}
 		    
@@ -245,6 +251,7 @@ class Ball extends Thread {
 					e1 = d1; e2 = d2; e3 = d3; e4 = d4; e5 = d5; e6 = d6;
 					save = scoreCount;
 					lives--;
+					System.out.println("You have " + lives + " lives left!");
 					restart = true;
 					if (lives == 0 || scoreCount == 42) {
 						try {
