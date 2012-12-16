@@ -206,9 +206,8 @@ class Ball extends Thread {
 	   		 }
 	   	}
 		    
-	    if (y >= box.getSize().height-25 && x >= Rebound.paddle.getX() && x < Rebound.paddle.getX()+100) {
+	    if (y >= box.getSize().height-25 && x >= Rebound.paddle.getX() && x < Rebound.paddle.getX()+100)
 	    	vy = -vy;
-		}
 		    
 	    g.fillOval(x, y, 10, 10);
 	}

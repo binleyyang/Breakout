@@ -7,15 +7,15 @@ public class HighScore extends JPanel {
 	private Scanner file;
 	static JFrame frame;
 	static JLabel info;
-	static String f = "highscore.txt";
+	static String s = "highscore.txt";
 
 	static HighScore app = new HighScore();
 
 	public static void main(String[] args){
-		Window();
+		init();
 	}
 
-	static void Window(){	
+	static void init(){	
 		frame = new JFrame ("HighScores");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		frame.getContentPane().add(new HighScore());
@@ -27,7 +27,7 @@ public class HighScore extends JPanel {
 	public HighScore() {
 		JLabel info = new JLabel("");
 		ArrayList records = new ArrayList();
-		records = read(f);
+		records = read(s);
 
 		for (int i = 0; i < records.size(); i++) {
 			info.setText(info.getText() + " \n" + records.get(i));
@@ -63,17 +63,17 @@ public class HighScore extends JPanel {
 	}
 
 
-	public void add(String f, String message) {
+	public void add(String f, String score) {
 
 		BufferedWriter bw = null;
+		
 		try {
 			bw = new BufferedWriter(new FileWriter(f, true));
 			bw.newLine();
 
-			bw.write(message);
+			bw.write(score);
 			bw.newLine();
 			bw.flush();
-
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

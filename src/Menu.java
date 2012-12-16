@@ -6,11 +6,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
-
 import java.io.*;
 import java.awt.event.*;
 
@@ -22,10 +17,10 @@ public class Menu extends JPanel{
 	static JFrame frame;
 
 	public static void main (String[] args) throws IOException{
-		Window();
+		init();
 	}
 	
-	static void Window() throws IOException {
+	static void init() throws IOException {
 		frame = new JFrame ("Prison Break");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		frame.getContentPane().add(new Menu("background.jpg"));

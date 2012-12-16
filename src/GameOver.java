@@ -60,7 +60,7 @@ public class GameOver extends JPanel{
             	SwingUtilities.invokeLater(new Runnable() {
        	         public void run() {
        	           try {
-					Menu.Window();
+					Menu.init();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -89,7 +89,7 @@ public class GameOver extends JPanel{
             	frame.setVisible(false);
             	SwingUtilities.invokeLater(new Runnable() {
        	         public void run() {
-       	        	 HighScore.Window();
+       	        	 HighScore.init();
        	         }
        	      });
             }
