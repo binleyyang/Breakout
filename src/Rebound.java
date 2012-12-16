@@ -9,6 +9,8 @@ public class Rebound extends JPanel {
 	ImageIcon rectangle;
 	static JLabel paddle;
 	static JPanel frame;
+	final JLabel lives = new JLabel ("Lives: 3");
+	final JLabel score = new JLabel ("Score: 0");
 	
 	public Rebound() {
 		
@@ -30,8 +32,10 @@ public class Rebound extends JPanel {
 		paddle = new JLabel(rectangle);
 		
 		frame = new JPanel();
-		add(frame, BorderLayout.CENTER);
-		frame.add(paddle, BorderLayout.SOUTH);
+		add(frame);
+		frame.add(paddle);
+		//frame.add(score, BorderLayout.NORTH+50);
+		//frame.add(lives, BorderLayout.NORTH);
 		paddle.setLocation(400, 741);
 	}
 	
@@ -44,16 +48,15 @@ public class Rebound extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Ball ball = new Ball(frame);
-			ball.addBricks();
 			
 			int count = 0;
 			int x = paddle.getX();
 			String move = e.getActionCommand();
 			
 			if (move.equals("Left") && x >= 7)
-				paddle.setLocation(x-30, 741);
+				paddle.setLocation(x-25, 741);
 			if (move.equals("Right") && x <= frame.getSize().width-90)
-				paddle.setLocation(x+30, 741);
+				paddle.setLocation(x+25, 741);
 			if (move.equals("Space") && count < 1) {
 				ball.start();
 				count = 1;
@@ -66,14 +69,14 @@ class Ball extends Thread {
 
 	int a = Rebound.paddle.getX()+50;
 	int b = Rebound.paddle.getY()-9;
-	private int vx = 2, vy = 2, x = a, y = b;
+	private int vx = 1, vy = 1, x = a, y = b;
 	private JPanel box;
+	private int d1 = 70, d2= 70, d3 = 70, d4 = 70, d5 = 70, d6 = 70;
 	
 	public Ball (JPanel m) {
 		box = m;
 	}
 	
-	/*
 	public static Color randColor() {
 		Random r = new Random();
 		int a = r.nextInt(256);
@@ -83,7 +86,6 @@ class Ball extends Thread {
 		
 		return x;
 	}
-	*/
 	
 	public void addBall() {
 		Graphics g = box.getGraphics();
@@ -94,25 +96,16 @@ class Ball extends Thread {
 	public void addBricks() {
 		Graphics g = box.getGraphics();
 		
-		for (int column = 0; column <= 90; column += 10) {
+		for (int column = 0; column <= 60; column += 10) {
 			for (int row = 0; row <= 930; row += 155) {
 				g.fillRect(row, column, 155, 10);
-			
-				if (column == 0 || column == 10) 
-					g.setColor(Color.RED);
-				if (column == 20 || column == 30)
-					g.setColor(Color.ORANGE);
-				if (column == 40 || column == 50)
-					g.setColor(Color.YELLOW);
-				if (column == 60 || column == 70)
-					g.setColor(Color.GREEN);
-				if (column == 80 || column == 90)
-					g.setColor(Color.CYAN);
 			}
+			g.setColor(randColor());
 		}
 	}
 	
 	public void moveBall() {
+		int scoreCount = 0;
 		Graphics g = box.getGraphics();
 		g.setXORMode(box.getBackground());
 	    g.fillOval(x, y, 10, 10);
@@ -130,14 +123,67 @@ class Ball extends Thread {
 	    	vx = -vx;
 	    }
 		    
-	    if (y <= 90) {
-	    	y = 90;
-	    	vy = -vy;
+	   
 	    	if (x <= 155) {
-	    		g.setColor(Color.white);
-	    		g.fillRect(0, 60, 155, 10);
+	    		 if (y <= d1) {
+	    		    y = d1;
+	    		    vy = -vy;
+	    		    g.clearRect(0, d1-10, 155, 10);
+	    		    d1 -= 10;
+	    		    scoreCount++;
+	    		    //score.setText("" + scoreCount);
+	    		 }
 	    	}
-	    }
+	    	if (x > 155 && x <= 310) {
+	    		 if (y <= d2) {
+	    		    	y = d2;
+	    		    	vy = -vy;
+	    		    	g.clearRect(155, d2-10, 155, 10);
+	    		    	d2 -= 10;
+	    		    	scoreCount++;
+	    		    	//score.setText("" + scoreCount);
+	    		 }
+	    	}
+	    	if (x > 310 && x <= 465) {
+	    		 if (y <= d3) {
+	    			 y = d3;
+	    			 vy = -vy;
+	    			 g.clearRect(310, d3-10, 155, 10);
+	    			 d3 -= 10;
+	    			 scoreCount++;
+	    			 //score.setText("" + scoreCount);
+	    		 }
+	    	}
+	    	if (x > 465 && x <= 620) {
+	    		 if (y <= d4) {
+	    			 y = d4;
+	    			 vy = -vy;
+	    			 g.clearRect(465, d4-10, 155, 10);
+	    			 d4 -= 10;
+	    			 scoreCount++;
+	    			 //score.setText("" + scoreCount);
+	    		 }
+	    	}
+	    	if (x > 620 && x <= 775) {
+	    		 if (y <= d5) {
+	    			 y = d5;
+	    			 vy = -vy;
+	    			 g.clearRect(775, d5-10, 155, 10);
+	    			 d5 -= 10;
+	    			 scoreCount++;
+	    			 //score.setText("" + scoreCount);
+	    		 }
+	    	}
+	    	if (x > 775 && x <= 930) {
+	    		 if (y <= d6) {
+	    			 y = d6;
+	    			 vy = -vy;
+	    			 g.clearRect(775, d6-10, 155, 10);
+	    			 d6 -= 10;
+	    			 scoreCount++;
+	    			 //score.setText("" + scoreCount);
+	    		 }
+	    	}
 		    
 	    if (y >= box.getSize().height-25 && x >= Rebound.paddle.getX() && x < Rebound.paddle.getX()+100) {
 	    	vy = -vy;
@@ -150,13 +196,14 @@ class Ball extends Thread {
 	public void run() {
 		try {
 			addBall();
+			addBricks();
 			for (int i = 1; i > 0; i++) {
 				if (y+10 >= box.getSize().height) {
 					System.out.println("Game Over!");
 					break;
 				}
 				moveBall();
-				sleep(4);
+				sleep(3);
 			}	
 		} 
 		catch (InterruptedException e) {}
