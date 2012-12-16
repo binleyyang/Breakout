@@ -84,6 +84,7 @@ public class Menu extends JPanel{
 			Clip clip = AudioSystem.getClip();
 			clip.open(music);
 			clip.start();
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (IOException error) {
 			System.out.println("File Not Found!");
 		}
