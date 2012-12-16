@@ -57,11 +57,24 @@ public class Menu extends JPanel{
             	SwingUtilities.invokeLater(new Runnable() {
        	         public void run() {
        	        	 PlayGame.Game();
+       	        	 ScoreBoard.init();
        	        	 Rebound.paddle.setLocation(400, 741);
        	         }
        	      });
             }
-        });      
+        }); 
+	    
+	    highscore.addActionListener(new ActionListener() {	 
+            public void actionPerformed(ActionEvent e)
+            {
+            	frame.setVisible(false);
+            	SwingUtilities.invokeLater(new Runnable() {
+       	         public void run() {
+       	        	 HighScore.init();
+       	         }
+       	      });
+            }
+        });     
 	}
 
 	public void Music() throws Exception {

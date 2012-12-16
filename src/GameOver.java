@@ -19,7 +19,7 @@ public class GameOver extends JPanel{
 	      SwingUtilities.invokeLater(new Runnable() {
 	         public void run() {
 	        	 try {
-					Window();
+					init();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -28,7 +28,7 @@ public class GameOver extends JPanel{
 	      });
 	   }
 
-	static void Window() throws IOException {
+	static void init() throws IOException {
 
 		frame = new JFrame ("Game Over");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	

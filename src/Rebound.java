@@ -36,8 +36,6 @@ public class Rebound extends JPanel {
 		frame.setLayout(new FlowLayout());
 		add(frame);
 		frame.add(paddle);
-		frame.add(score);
-		frame.add(lives);
 	}
 	
 	private class Movement extends AbstractAction {
@@ -55,13 +53,9 @@ public class Rebound extends JPanel {
 			
 			if (move.equals("Left") && x >= 7) {
 				paddle.setLocation(x-25, 758);
-				score.setLocation(200, 758);
-				lives.setLocation(600, 758);
 			}
 			if (move.equals("Right") && x <= frame.getSize().width-90) {
 				paddle.setLocation(x+25, 758);
-				score.setLocation(200, 758);
-				lives.setLocation(600, 758);
 			}
 			if (move.equals("Space")) {
 				if (count < 1) {
@@ -163,7 +157,7 @@ class Ball extends Thread {
 	   		    vy = -vy;
 	   		    g.clearRect(0, d1-10, 155, 10);
 	   		    d1 -= 10;
-	   		    //Rebound.score.setText("Score: " + scoreCount);
+	   		    ScoreBoard.score.setText("Score: " + scoreCount);
 	   		    System.out.println("The score is: " + scoreCount);
 	    	}
     	}
@@ -176,7 +170,7 @@ class Ball extends Thread {
 	   			 vy = -vy;
 	   			 g.clearRect(155, d2-10, 155, 10);
 	   			 d2 -= 10;
-	    		 //Rebound.score.setText("Score: " + scoreCount);
+	   			ScoreBoard.score.setText("Score: " + scoreCount);
 		   		    System.out.println("The score is: " + scoreCount);
 	    		 }
 	    	}
@@ -189,7 +183,7 @@ class Ball extends Thread {
 	    		 vy = -vy;
 	   			 g.clearRect(310, d3-10, 155, 10);
 	    		 d3 -= 10;
-	   			 //Rebound.score.setText("Score: " + scoreCount);
+	    		 ScoreBoard.score.setText("Score: " + scoreCount);
 		   		  System.out.println("The score is: " + scoreCount);
 	    	 }
 	    }
@@ -202,7 +196,7 @@ class Ball extends Thread {
 	    		 vy = -vy;
 	   			 g.clearRect(465, d4-10, 155, 10);
 	   			 d4 -= 10;
-	   			 //Rebound.score.setText("Score: " + scoreCount);
+	   			ScoreBoard.score.setText("Score: " + scoreCount);
 		   		   System.out.println("The score is: " + scoreCount);
     		 }
 	   	}
@@ -215,7 +209,7 @@ class Ball extends Thread {
 	   			 vy = -vy;
 	   			 g.clearRect(620, d5-10, 155, 10);
 	   			 d5 -= 10;
-	   			 //Rebound.score.setText("Score: " + scoreCount);
+	   			ScoreBoard.score.setText("Score: " + scoreCount);
 		   		  System.out.println("The score is: " + scoreCount);
 	   		 }
 	   	}
@@ -229,7 +223,7 @@ class Ball extends Thread {
 	    		 g.clearRect(775, d6-10, 155, 10);
 	    		 d6 -= 10;
 	    		 
-	   			 //Rebound.score.setText("Score: " + scoreCount);
+	    		 ScoreBoard.score.setText("Score: " + scoreCount);
 		   		  System.out.println("The score is: " + scoreCount);
 	   		 }
 	   	}
@@ -256,7 +250,7 @@ class Ball extends Thread {
 					if (lives == 0 || scoreCount == 42) {
 						try {
 							PlayGame.close();
-							GameOver.Window();
+							GameOver.init();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

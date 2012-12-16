@@ -7,6 +7,7 @@ public class PlayGame {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Game();
+				ScoreBoard.init();
 			}
 		});
 	}

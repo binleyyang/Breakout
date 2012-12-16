@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
 
@@ -25,6 +28,9 @@ public class HighScore extends JPanel {
 	}
 
 	public HighScore() {
+		
+		JButton restart = new JButton("New Game");
+		JButton menu = new JButton ("Menu");
 		JLabel info = new JLabel("");
 		ArrayList records = new ArrayList();
 		records = read(s);
@@ -32,7 +38,40 @@ public class HighScore extends JPanel {
 		for (int i = 0; i < records.size(); i++) {
 			info.setText(info.getText() + " \n" + records.get(i));
 		}
+		
+		restart.addActionListener(new ActionListener() {	 
+			public void actionPerformed(ActionEvent e)
+	            {
+	            	frame.setVisible(false);
+	            	SwingUtilities.invokeLater(new Runnable() {
+	       	         public void run() {
+	       	        	 PlayGame.Game();
+	       	        	 Rebound.paddle.setLocation(400, 741);
+	       	         }
+	       	      });
+	            }
+	        });   
+		
+		menu.addActionListener(new ActionListener() {	 
+			public void actionPerformed(ActionEvent e)
+            {
+            	frame.setVisible(false);
+            	SwingUtilities.invokeLater(new Runnable() {
+       	         public void run() {
+       	        	 try {
+						Menu.init();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+       	         }
+       	      });
+            }
+        }); 
+		
 		add(info);
+		add(restart);
+		add(menu);
 	}
 
 	public ArrayList<String> read (String f) {
